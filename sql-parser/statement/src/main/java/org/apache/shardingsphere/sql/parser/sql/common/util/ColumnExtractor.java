@@ -29,7 +29,6 @@ import org.apache.shardingsphere.sql.parser.sql.common.segment.dml.predicate.Whe
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Column extractor.
@@ -70,8 +69,7 @@ public final class ColumnExtractor {
      */
     public static void extractColumnSegments(final Collection<ColumnSegment> columnSegments, final Collection<WhereSegment> whereSegments) {
         for (WhereSegment each : whereSegments) {
-            Collection<AndPredicate> result = new CopyOnWriteArraySet<>();
-            for (AndPredicate andPredicate : ExpressionExtractUtil.getAndPredicates(result, each.getExpr())) {
+            for (AndPredicate andPredicate : ExpressionExtractUtil.getAndPredicates(each.getExpr())) {
                 extractColumnSegments(columnSegments, andPredicate);
             }
         }
